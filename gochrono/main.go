@@ -30,5 +30,10 @@ func main() {
 
     log.Printf("Successfully connected to %s database", connection.GetDialect())
 
+    if err:= connection.Setup(); err != nil {
+        log.Fatalf("Failed while applying migrations: %v", err)
+    }
+
+    log.Print("Successfully Created setup")
 }
 
