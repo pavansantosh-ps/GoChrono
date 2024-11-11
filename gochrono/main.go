@@ -9,31 +9,30 @@ import (
 
 func main() {
 
-    if err := godotenv.Load(); err != nil {
-        log.Printf("Warning: .env file not found: %v", err)
-    }
+	if err := godotenv.Load(); err != nil {
+		log.Printf("Warning: .env file not found: %v", err)
+	}
 
-    dbConfig, err := database.NewConfig()
-    if err != nil {
-        log.Fatalf("Failed to create database config: %v", err)
-    }
+	dbConfig, err := database.NewConfig()
+	if err != nil {
+		log.Fatalf("Failed to create database config: %v", err)
+	}
 
-    connection, err := database.New(dbConfig)
-    if err != nil {
-        log.Fatalf("Failed to connect to database: %v", err)
-    }
-    defer connection.Close()
+	connection, err := database.New(dbConfig)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer connection.Close()
 
-    if err := connection.Ping(); err != nil {
-        log.Fatalf("Failed to ping database: %v", err)
-    }
+	if err := connection.Ping(); err != nil {
+		log.Fatalf("Failed to ping database: %v", err)
+	}
 
-    log.Printf("Successfully connected to %s database", connection.GetDialect())
+	log.Printf("Successfully connected to %s database", connection.GetDialect())
 
-    if err:= connection.Setup(); err != nil {
-        log.Fatalf("Failed while applying migrations: %v", err)
-    }
+	if err := connection.Setup(); err != nil {
+		log.Fatalf("Failed while applying migrations: %v", err)
+	}
 
-    log.Print("Successfully Created setup")
+	log.Print("Successfully Created setup")
 }
-
